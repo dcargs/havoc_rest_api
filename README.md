@@ -23,7 +23,7 @@ Havoc Communications REST API / STUN Server
 * success: { status: 200, data: { "OK" } }
 * failure: { status: http_error_code, data: error_string }
 
-## /user/check_session -> POST
+## /user/check_status -> POST
 ### This function checks a sent session_token and username for a match in user_session. Used for checking authentication
 #### Things to send:
 * username -> string
