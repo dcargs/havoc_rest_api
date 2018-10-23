@@ -1,6 +1,37 @@
 var query = require('./query');
 
 module.exports = {
+  get_user_details: async function(username){
+    return new Promise(async function(resolve, reject) {
+      var query_statement = `SELECT user.email, user.username, user.first_name, user.last_name, user.fk_permission_code as permission_code, permission.permission_level
+                             FROM user INNER JOIN permission ON permission.permission_code = user.fk_permission_code`;
+      if(username){
+        query_statement += ` WHERE username = ?`;
+        let params = [username];
+        let response = await query.query(query_statement, params);
+        if(response){
+          resolve(response[0]);
+        } else {
+          reject(response);
+        }
+      } else {
+        let params = [];
+        let response = await query.query(query_statement, params);
+        if(response){
+          resolve(response[0]);
+        } else {
+          reject(response);
+        }
+      }
+
+      // if(response){
+      //   resolve(response[0]);
+      // } else {
+      //   reject(response);
+      // }
+    });
+  },
+
   delete_user_session_token: async function(username){
     return new Promise(async function(resolve, reject) {
       let query_statement = 'DELETE FROM user_session WHERE fk_username = ?';

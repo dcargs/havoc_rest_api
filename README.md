@@ -2,13 +2,25 @@
 Havoc Communications REST API / STUN Server
 
 # API End-Points
+* [User Admin](#user-admin---top)
 * [User](#user---top)
+
+# User Admin - [Top](#api-end-points)
+## /user_admin/create_user -> POST
+### This function creates a user -> ADMIN ONLY
+#### Things to send:
+* username -> string
+* session_token -> string
+* new_user -> JSON -> {"email": "test@havoc.com", "username": "test", "first_name": "Test", "last_name": "McGee", "password": "1234", "fk_permission_code": "1" }
+#### Returns:
+* success: { status: 200, data: { "OK" } }
+* failure: { status: http_error_code, data: error_string }
 
 # User - [Top](#api-end-points)
 ## /user/login -> POST
 ### This function logs a user in and inserts their session_token into user_session
 #### Things to send:
-* username -> int(11)
+* username -> string
 * password -> string
 #### Returns:
 * success: { status: 200, data: { session_token: <string>, username: <string>, first_name: <string>, last_name: <string>, fk_permission_code: <int>, permission_level: <string> } }
