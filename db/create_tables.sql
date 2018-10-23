@@ -1,4 +1,11 @@
 -- Database: havoc
+-- DROP USER havoc_user@localhost;
+-- DROP USER havoc_user@'%';
+-- CREATE USER 'havoc_user'@'localhost' IDENTIFIED BY 'ASDFasdf!QAZ1qaz';
+-- CREATE USER 'havoc_user'@'%' IDENTIFIED BY 'ASDFasdf!QAZ1qaz';
+-- GRANT ALL ON havoc.* TO 'havoc_user'@'localhost';
+-- GRANT ALL ON havoc.* TO 'havoc_user'@'%';
+
 CREATE TABLE `permission` (
   `permission_code` int(11) unsigned NOT NULL,
   `permission_level` varchar(48) NOT NULL,

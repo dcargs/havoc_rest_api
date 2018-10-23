@@ -1,0 +1,25 @@
+{
+  "name": "havoc_rest_api",
+  "version": "1.0.0",
+  "description": "Havoc Communications REST API / STUN Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dcargs/havoc_rest_api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcargs/havoc_rest_api/issues"
+  },
+  "homepage": "https://github.com/dcargs/havoc_rest_api#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  }
+}
