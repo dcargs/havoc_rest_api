@@ -18,6 +18,35 @@ module.exports = {
     });
   },
 
+  read_users: async function(){
+    return new Promise(function(resolve, reject) {
+      let query_statement = `SELECT user.email, user.username, user.first_name, user.last_name, user.fk_permission_code as permission_code, permission.permission_level
+                             FROM user INNER JOIN permission ON permission.permission_code = user.fk_permission_code`;
+      let params = [];
+
+      let result = query.query(query_statement, params);
+      if(result){
+        resolve(result);
+      } else {
+        reject(result.message);
+      }
+    });
+  },
+
+  read_permissions: async function(){
+    return new Promise(async function(resolve, reject) {
+      let query_statement = 'SELECT * FROM permission';
+      let params = [];
+
+      let result = await query.query(query_statement, params);
+      if(result){
+        resolve(result);
+      } else {
+        reject(result.message);
+      }
+    });
+  },
+
   hash_password: async function(password){
     return new Promise(function(resolve, reject) {
       const saltRounds = 16;
