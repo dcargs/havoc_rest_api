@@ -7,18 +7,17 @@ var http_codes = require('./globals/http_codes');
 var input_standard = require('./globals/input_standardization');
 var user_query = require('./mysql/user_query');
 var hash_functions = require('./globals/hash_functions');
-var fs = require('fs');
 
 // ********* DANGEROUS, DO NOT LEAVE IN FOR PROD ***********************
 // router.post('/bcrypt', async function(req, res){
-//   var password = req.body.password;
-//   var saltRounds = 16;
+  // var password = req.body.password;
+  // var saltRounds = 16;
 //
-//   bcrypt.genSalt(saltRounds, function(err, salt) {
-//     bcrypt.hash(password, salt, function(err, hash) {
-//       res.send(JSON.stringify({'hash':hash}));
-//     });
-//   });
+  // bcrypt.genSalt(saltRounds, function(err, salt) {
+  //   bcrypt.hash(password, salt, function(err, hash) {
+  //     res.send(JSON.stringify({'hash':hash}));
+  //   });
+  // });
 //
 // });
 // *******************
@@ -77,7 +76,7 @@ router.post('/logout', async function(req, res){
   if(check_var.check_var(username) && check_var.check_var(session_token)){
     try {
       let stored_session_token = await user_query.get_user_session_token(username);
-      if(stored_session_token && stored_session_token.length == 1){
+      if(stored_session_token && stored_session_token.length == 254){
         if(stored_session_token == session_token){
           // log the user out
           let response = await user_query.delete_user_session_token(username);

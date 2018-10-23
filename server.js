@@ -3,8 +3,8 @@ var fs = require('fs'),
   express = require('express'),
   // cookieParser = require('cookie-parser'),
   // session = require('express-session'),
+  adminQuery = require('./app/mysql/admin_query.js'),
   bodyParser = require('body-parser'),
-  db = require('./protected/connection'),
   port = 12345,
   app = express();
 
@@ -29,26 +29,26 @@ app.use(bodyParser.urlencoded({ extended:true, limit: '500mb' }));
 app.use(bodyParser.json({limit: '500mb'}));
 
 // logs every request
-// app.use(function(req, res, next) {
-//   if(req.body.usercode){
-//     let path = req.path;
-//     let ip = req.connection.remoteAddress;
-//     let usercode = req.body.usercode;
-//
-//     let query = 'INSERT INTO request_log (route_called, ip_address, fk_usercode) VALUES (?, ?, ?);'
-//     db.query(query, [path, ip, usercode], function(err, rows){
-//       next();
-//     });
-//   } else {
-//     next();
-//   }
-// });
+app.use(async function(req, res, next) {
+  if(req.body.username){
+    let data = {
+      route_called: req.path,
+      ip_address: req.connection.remoteAddress,
+      fk_username: req.body.username
+    };
+
+    await adminQuery.log_request(data);
+
+    next();
+
+  } else {
+    next();
+  }
+});
 
 app.use('/user', require('./app/user.js'));
-// app.use('/app_logs', require('./app/app_logs.js'));
-// app.use('/forklift', require('./app/forklift.js'));
-// app.use('/branch', require('./app/branch.js'));
-// app.use('/department', require('./app/department.js'));
+app.use('/user_admin', require('./app/user_admin.js'));
+app.use('/permission_admin', require('./app/permission_admin.js'));
 
 app.get('/', function (req, res) {
   res.send('hello world')
