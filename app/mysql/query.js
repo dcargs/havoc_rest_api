@@ -11,5 +11,19 @@ module.exports = {
         }
       });
     });
+  },
+
+  column_names: async function(table){
+    return new Promise(function(resolve, reject) {
+      let query = 'SELECT * FROM '+table;
+
+      db.query(query, function(err, rows){
+        if(err){
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
+    });
   }
 };

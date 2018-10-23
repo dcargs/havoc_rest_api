@@ -36,6 +36,21 @@ Havoc Communications REST API / STUN Server
 * success: { status: 200, data: [{ "email": ,"username": ,"first_name": ,"last_name": ,"permission_code": , "permission_level": }, ...] }
 * failure: { status: http_error_code, data: error_string }
 
+## /user_admin/update_user -> POST -> ADMIN ONLY
+### This function updates a given user for any of the following properties:
+* `email`
+* `first_name`
+* `last_name`
+* `password`
+* `fk_permission_code`
+#### Things to send: YOU MUST SEND THE `username` OF THE USER TO BE UPDATED UNALTERED OTHERWISE IT WILL FAIL
+* username -> string
+* session_token -> string
+* fields -> JSON eg -> {"username": "test", "password": "123456", "email": "new_email@test.com"}
+#### Returns:
+* success: { status: 200, data: { "OK" } }
+* failure: { status: http_error_code, data: error_string }
+
 # User - [Top](#api-end-points)
 ## /user/login -> POST
 ### This function logs a user in and inserts their session_token into user_session

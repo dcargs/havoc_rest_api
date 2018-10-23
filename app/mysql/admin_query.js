@@ -33,6 +33,59 @@ module.exports = {
     });
   },
 
+  update_user: async function(fields){
+    // fields can be any of the columns in the user table except username
+    return new Promise(async function(resolve, reject) {
+      // start to build query
+      var query_statement = 'UPDATE user';
+      var final_piece = ' WHERE username = ?';
+      var final_param = fields.username;
+      var params = [];
+      // get all possible field values
+      var column_names = await query.column_names('user');
+      column_names = Object.keys(column_names[0]);
+
+      let keys = Object.keys(fields);
+      let values = Object.values(fields);
+      var flag = true;
+      for (var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var value = values[i];
+        for (var j = 0; j < column_names.length; j++) {
+          var column_name = column_names[j];
+          if(column_name == key){
+            if(key == 'username'){
+              continue;
+            } else {
+              if(key == 'password'){
+                value = await module.exports.hash_password(value);
+              }
+              if(i == 0 || flag){
+                query_statement += ' SET ' + key + " = ?";
+                flag = false;
+              } else {
+                query_statement += ', ' + key + " = ?";
+              }
+              params.push(value);
+            }
+          }
+        }
+      }
+      query_statement += final_piece;
+      params.push(final_param);
+      console.log("query_statement: "+query_statement);
+      console.log("params: "+params);
+
+      let result = await query.query(query_statement, params);
+      if(result){
+        resolve(result.affectedRows);
+      } else {
+        reject(result.message);
+      }
+
+    });
+  },
+
   read_permissions: async function(){
     return new Promise(async function(resolve, reject) {
       let query_statement = 'SELECT * FROM permission';

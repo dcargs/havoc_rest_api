@@ -115,7 +115,61 @@ router.post('/get_all_users', async function(req, res){
   }
 });
 
+router.post('/update_user', async function(req, res){
+  let username = req.body.username;
+  let session_token = req.body.session_token;
+  var fields = req.body.fields;
+  try {
+    fields = JSON.parse(fields);
+  } catch (e) {
+    console.log(e);
+  }
 
+  if(check_var.check_var(username) && check_var.check_var(session_token) && check_var.check_var(fields)){
+    try {
+      let stored_session_token = await user_query.get_user_session_token(username);
+      if(stored_session_token){
+        if(stored_session_token == session_token){
+          let request_user_details = await user_query.get_user_details(username);
+          if(request_user_details.permission_level == 'Admin'){
+            let result = await admin_query.update_user(fields);
+            if(result){
+              returnOBJ.status = 200;
+              returnOBJ.data = http_codes["200"];
+              res.send(returnOBJ);
+            } else {
+              returnOBJ.status = 500;
+              returnOBJ.data = http_codes["500"];
+              res.send(returnOBJ);
+            }
+          } else {
+            returnOBJ.status = 401;
+            returnOBJ.data = http_codes["401"];
+            res.send(returnOBJ);
+          }
+        } else {
+          returnOBJ.status = 401;
+          returnOBJ.data = http_codes["401"];
+          res.send(returnOBJ);
+        }
+      } else {
+        returnOBJ.status = 500;
+        returnOBJ.data = http_codes["500"];
+        res.send(returnOBJ);
+      }
+    } catch (e) {
+      console.log("error:" + e);
+      console.trace();
+      returnOBJ.status = 500;
+      returnOBJ.data = http_codes["500"];
+      res.send(returnOBJ);
+    }
+  } else {
+    returnOBJ.status = 400;
+    returnOBJ.data = http_codes["400"];
+    res.send(returnOBJ);
+  }
+});
 
 //Returns the router as a useable variable to server.js
 module.exports = router;
