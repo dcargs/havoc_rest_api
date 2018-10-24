@@ -116,6 +116,9 @@ module.exports = {
 
   log_request: async function(data){
     return new Promise(async function(resolve, reject) {
+      if(data.route_called == '/user/login'){
+        data.body = 'REDACTED';
+      }
       let query_statement = 'INSERT INTO request_log (route_called, ip_address, fk_username, headers, body) VALUES (?, ?, ?, ?, ?)';
       let params = [data.route_called, data.ip_address, data.fk_username, JSON.stringify(data.headers), JSON.stringify(data.body)];
       await query.query(query_statement, params);
