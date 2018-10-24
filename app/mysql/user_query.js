@@ -92,7 +92,7 @@ module.exports = {
           params = [username];
           response = await query.query(query_statement, params);
 
-          resolve(response);
+          resolve(response[0]);
         } else {
           // delete all old session_tokens
           query_statement = 'DELETE FROM user_session WHERE fk_username = ?';
