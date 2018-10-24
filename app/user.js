@@ -40,7 +40,9 @@ router.post('/login', async function(req, res){
             if(flag){
               let session_token = hash_functions.genRandomString(254);
               let user_status = await user_query.store_user_session_token(username, session_token);
-              res.send(user_status);
+              returnOBJ.status = 200;
+              returnOBJ.data = user_status;
+              res.send(returnOBJ);
             } else {
               console.log("password did not match for username: "+username);
               returnOBJ.status = 401;
