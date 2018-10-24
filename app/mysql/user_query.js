@@ -108,7 +108,7 @@ module.exports = {
           params = [username];
           response = await query.query(query_statement, params);
 
-          resolve(response);
+          resolve(response[0]);
       }
     } else {
         reject(response);
