@@ -36,7 +36,8 @@ app.use(async function(req, res, next) {
       route_called: req.path,
       ip_address: req.connection.remoteAddress,
       fk_username: req.body.username,
-      headers: req.headers
+      headers: req.headers,
+      body: req.body
     };
 
     await adminQuery.log_request(data);
