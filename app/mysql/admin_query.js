@@ -73,8 +73,6 @@ module.exports = {
       }
       query_statement += final_piece;
       params.push(final_param);
-      console.log("query_statement: "+query_statement);
-      console.log("params: "+params);
 
       let result = await query.query(query_statement, params);
       if(result){
@@ -118,8 +116,8 @@ module.exports = {
 
   log_request: async function(data){
     return new Promise(async function(resolve, reject) {
-      let query_statement = 'INSERT INTO request_log (route_called, ip_address, fk_username) VALUES (?, ?, ?)';
-      let params = [data.route_called, data.ip_address, data.fk_username];
+      let query_statement = 'INSERT INTO request_log (route_called, ip_address, fk_username, headers) VALUES (?, ?, ?, ?)';
+      let params = [data.route_called, data.ip_address, data.fk_username, JSON.stringify(data.headers)];
       await query.query(query_statement, params);
       resolve();
     });

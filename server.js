@@ -31,10 +31,12 @@ app.use(bodyParser.json({limit: '500mb'}));
 // logs every request
 app.use(async function(req, res, next) {
   if(req.body.username){
+    // console.log(Object.keys(req));
     let data = {
       route_called: req.path,
       ip_address: req.connection.remoteAddress,
-      fk_username: req.body.username
+      fk_username: req.body.username,
+      headers: req.headers
     };
 
     await adminQuery.log_request(data);
