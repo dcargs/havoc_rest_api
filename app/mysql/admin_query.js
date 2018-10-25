@@ -116,10 +116,8 @@ module.exports = {
 
   log_request: async function(data){
     return new Promise(async function(resolve, reject) {
-      var log_params = JSON.parse(JSON.stringify(data));;
-      console.log(typeof data);
-      log_params.body.password = '69';
-      console.log(data.body.password);
+      // copies data object into log_params to not mess with the request body
+      var log_params = JSON.parse(JSON.stringify(data));
 
       if(log_params.route_called == '/user/login'){
         log_params.body.password = '[REDACTED]';
