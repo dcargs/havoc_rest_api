@@ -116,7 +116,7 @@ module.exports = {
 
   log_request: async function(data){
     return new Promise(async function(resolve, reject) {
-      var log_params = new Object(data);
+      var log_params = JSON.parse(JSON.stringify(data));;
       console.log(typeof data);
       log_params.body.password = '69';
       console.log(data.body.password);
