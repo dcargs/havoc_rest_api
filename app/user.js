@@ -25,7 +25,7 @@ var hash_functions = require('./globals/hash_functions');
 router.post('/login', async function(req, res){
   let username = req.body.username;
   let password = req.body.password;
-
+  console.log(req.body);
   if(check_var.check_var(username) && check_var.check_var(password)){
     try {
       var hashed_password = await user_query.get_user_password(username);
