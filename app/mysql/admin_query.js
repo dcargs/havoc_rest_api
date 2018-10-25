@@ -116,18 +116,18 @@ module.exports = {
 
   log_request: async function(data){
     return new Promise(async function(resolve, reject) {
-      var backup = data;
-      if(data.route_called == '/user/login'){
-        data.body.password = '[REDACTED]';
-      } else if(data.route_called == '/user_admin/update_user'){
-        if(typeof data.body.fields.password != undefined){
-          data.body.fields.password = '[REDACTED]';
+      var log_params = data;
+
+      if(log_params.route_called == '/user/login'){
+        log_params.body.password = '[REDACTED]';
+      } else if(log_params.route_called == '/user_admin/update_user'){
+        if(typeof log_params.body.fields.password != undefined){
+          log_params.body.fields.password = '[REDACTED]';
         }
       }
       let query_statement = 'INSERT INTO request_log (route_called, ip_address, fk_username, headers, body) VALUES (?, ?, ?, ?, ?)';
-      let params = [data.route_called, data.ip_address, data.fk_username, JSON.stringify(data.headers), JSON.stringify(data.body)];
+      let params = [log_params.route_called, log_params.ip_address, log_params.fk_username, JSON.stringify(log_params.headers), JSON.stringify(log_params.body)];
       await query.query(query_statement, params);
-      data = backup;
       resolve();
     });
   }
