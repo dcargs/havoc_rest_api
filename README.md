@@ -118,6 +118,35 @@ Havoc Communications REST API / STUN Server
 * success: { status: 200, data: { "OK" } }
 * failure: { status: http_error_code, data: error_string }
 
+## /user_admin/get_request_logs -> POST -> ADMIN ONLY
+### This function returns all the request logs over the specified range
+#### Things to send:
+* username -> string
+* session_token -> string
+* range -> int -> OPTIONAL
+#### range Possible values:
+* 1 -> last 24 hours
+* 7 -> last 7 days
+* 30 -> last 30 days
+* nothing -> last 60 days
+#### Returns:
+* success: { status: 200, data: JSON_data }
+* failure: { status: http_error_code, data: error_string }
+```    
+{
+    "status": 200,
+    "data": [
+        {
+            "log_id": 305,
+            "datetime_requested": "2018-10-30T16:57:13.000Z",
+            "ip_address": "::ffff:10.0.0.22",
+            "route_called": "/user_admin/get_request_logs",
+            "fk_username": "dcargill",
+            "body": "{\"username\":\"dcargill\",\"session_token\":\"be2d0fa229661288b452994a8921264a7b8fd9ea749b0aced7db791de1da41c10c19d5ebc4eba75756b910f7a0ff811c9a409deafb7e2019703e3e0a8c9cfc7cafe4675da76b53f95d15f4fd05c8d16c7b8df3670c58f14d6388a24144764713f9ca4b7a20fad1db832160eb73c6deb5bf07b0811ef731a18833293693606d\",\"range\":\"30\"}",
+            "headers": "\"keep-alive\""
+        }, ...
+```     
+
 # User - [Top](#contents)
 ## /user/login -> POST
 ### This function logs a user in and inserts their session_token into user_session
