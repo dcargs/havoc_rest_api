@@ -147,5 +147,52 @@ module.exports = {
       await query.query(query_statement, params);
       resolve();
     });
+  },
+
+  read_request_logs: async function(range){
+    return new Promise(async function(resolve, reject) {
+      var query_statement;
+      var params;
+      switch (range) {
+        case '1':
+          var dayAgo = new Date();
+          dayAgo.setDate(dayAgo.getDate() + -1);
+
+          query_statement = 'SELECT * FROM request_log WHERE datetime_requested > ? ORDER BY log_id DESC';
+          params = [dayAgo];
+          break;
+
+        case '7':
+          var weekAgo = new Date();
+          weekAgo.setDate(weekAgo.getDate() + -7);
+
+          query_statement = 'SELECT * FROM request_log WHERE datetime_requested > ? ORDER BY log_id DESC';
+          params = [weekAgo];
+          break;
+
+        case '30':
+          var monthAgo = new Date();
+          monthAgo.setDate(monthAgo.getDate() + -30);
+
+          query_statement = 'SELECT * FROM request_log WHERE datetime_requested > ? ORDER BY log_id DESC';
+          params = [monthAgo];
+          break;
+
+        default:
+          var twoMonthsAgo = new Date();
+          twoMonthsAgo.setDate(twoMonthsAgo.getDate() + -60);
+
+          query_statement = 'SELECT * FROM request_log WHERE datetime_requested > ? ORDER BY log_id DESC';
+          params = [twoMonthsAgo];
+      }
+
+      var result = await query.query(query_statement, params);
+      if(result){
+        resolve(result);
+      } else {
+        reject(result.message);
+      }
+
+    });
   }
 };
