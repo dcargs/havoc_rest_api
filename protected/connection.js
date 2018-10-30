@@ -1,6 +1,6 @@
 //NPM Module for MySQL Interactions
 var mysql = require('mysql');
-var os = require('os')
+var os = require('os');
 
 //Create connection variable that will be used throughout the
 //api to talk to the database

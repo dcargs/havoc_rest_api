@@ -18,6 +18,8 @@ Havoc Communications REST API / STUN Server
   * [Login](#userlogin---post)
   * [Logout](#userlogout---post)
   * [Check Status](#usercheck_status---post)
+* [Friend](#friend---top)
+  * [Find Friends](#friendfind_friends---post)
 
 # Permission Admin - [Top](#contents)
 ## /permission_admin/get_permissions -> POST
@@ -196,6 +198,33 @@ Havoc Communications REST API / STUN Server
 #### Returns:
 * success: { status: 200, data: OK}
 * failure: { status: http_error_code, data: error_string }
+
+# Friend - [Top](#contents)
+## /friend/find_friends -> POST
+### This function returns all the users the requestor is not friends with. Use this to show a user who they can send friend requests to.
+#### Things to send:
+* username -> string
+* session_token -> string
+#### Returns:
+* success: { status: 200, data: JSON_data }
+* failure: { status: http_error_code, data: error_string }
+```    
+{
+    "status": 200,
+    "data": [
+        {
+            "username": "david",
+            "first_name": "David",
+            "last_name": "Auger"
+        },
+        {
+            "username": "hayden",
+            "first_name": "Hayden",
+            "last_name": "Haddock"
+        }
+    ]
+}
+```    
 
 # Unit Testing - [Top](#contents)
 All routes that are created are put through testing using the [supertest](https://www.npmjs.com/package/supertest) module. All tests are within the test folder in the root of the project directory.

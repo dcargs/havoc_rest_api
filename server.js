@@ -56,6 +56,9 @@ app.use(async function(req, res, next) {
 app.use('/user', require('./app/user.js'));
 app.use('/user_admin', require('./app/user_admin.js'));
 app.use('/permission_admin', require('./app/permission_admin.js'));
+app.use('/friend', require('./app/friend.js'));
+app.use('/notification', require('./app/notification.js'));
+app.use('/message', require('./app/message.js'));
 
 app.get('/', function (req, res) {
   res.send('hello world')

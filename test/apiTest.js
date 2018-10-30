@@ -349,3 +349,44 @@ const pass = 'test_password';
                 });
         });
       });
+
+      //==================== /friend/find_friends API test ====================
+      /**
+       * Testing friend/find_friends
+       */
+       describe('POST /friend/find_friends', function () {
+         var session_token;
+         before(function(done) {
+           this.timeout(6000);
+           request(app)
+           .post('/user/login')
+           .send({
+             username: user,
+             password: pass
+           })
+           .end(function(err, res) {
+             if (err) throw err;
+             session_token = res.body.data.session_token;
+             done();
+           });
+         });
+
+         it('respond with 200 successful', function (done) {
+             request(app)
+                 .post('/friend/find_friends')
+                 .send({
+                   username: 'test_user',
+                   session_token: session_token
+                 })
+                 .set('Accept', 'application/json')
+                 .expect('Content-Type', /json/)
+                 .end((err, res) => {
+                     if (err || res.body.status != 200){
+                       throw new Error('Status Code: '+res.body.status)
+                       done();
+                     } else {
+                       done();
+                     }
+                 });
+         });
+       });

@@ -23,12 +23,6 @@ module.exports = {
           reject(response);
         }
       }
-
-      // if(response){
-      //   resolve(response[0]);
-      // } else {
-      //   reject(response);
-      // }
     });
   },
 
