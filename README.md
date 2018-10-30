@@ -86,8 +86,21 @@ Havoc Communications REST API / STUN Server
 * username -> string
 * password -> string
 #### Returns:
-* success: { status: 200, data: { session_token: <string>, username: <string>, first_name: <string>, last_name: <string>, fk_permission_code: <int>, permission_level: <string> } }
+* success: { status: 200, data: JSON_data }
 * failure: { status: http_error_code, data: error_string }
+```    
+{
+    "status": 200,
+    "data": {
+        "session_token": "ccb6d8963453df8d3b194a73fda6b9d4770c386195a84492a166bb86396f4c86f809e7519ef67e8dfa678f0f556f59256a9d61eb407b8f4dc27bcb52fe058a43747877c850fd003c1bf8fe06464f414410537f81f416cbc02d67ac8b0c9a0e095e4ede3aed5b35658c5169ad3fa0e4ab5f3e7e1db2205ee0dfaa2570f4d196",
+        "username": "dcargill",
+        "first_name": "Devin",
+        "last_name": "Cargill",
+        "fk_permission_code": 10,
+        "permission_level": "Admin"
+    }
+}
+```    
 
 ## /user/logout -> POST
 ### This function logs a user out by deleting their entry in user_session
