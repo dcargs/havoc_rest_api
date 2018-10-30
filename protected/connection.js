@@ -1,10 +1,14 @@
 //NPM Module for MySQL Interactions
 var mysql = require('mysql');
+var os = require('os')
 
 //Create connection variable that will be used throughout the
 //api to talk to the database
+let hostname = os.hostname();
+console.log(hostname);
+
 var connection = mysql.createConnection({
-  host: 'dev.baked.kitty', //127.0.0.1dev.baked.kitty
+  host: '127.0.0.1', //127.0.0.1dev.baked.kitty
   user: 'havoc_user',
   password: 'ASDFasdf!QAZ1qaz',
   database: 'havoc'
