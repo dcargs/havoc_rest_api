@@ -9,7 +9,15 @@ Havoc Communications REST API / STUN Server
 * [Permission Admin](#permission-admin---top)
   * [Get Permissions](#permission_adminget_permissions---post)
 * [User Admin](#user-admin---top)
+  * [Create User](#user_admincreate_user---post)
+  * [Get All Users](#user_adminget_all_users---post)
+  * [Update User](#user_adminupdate_user---post---admin-only)
+  * [Delete User](#user_admindelete_user---post---admin-only)
+  * [Get User Request Logs](#user_adminget_request_logs---post---admin-only)
 * [User](#user---top)
+  * [Login](#userlogin---post)
+  * [Logout](#userlogout---post)
+  * [Check Status](#usercheck_status---post)
 
 # Permission Admin - [Top](#contents)
 ## /permission_admin/get_permissions -> POST
