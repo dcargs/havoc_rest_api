@@ -19,6 +19,20 @@ Havoc Communications REST API / STUN Server
 #### Returns:
 * success: { status: 200, data: [{ "permission_code": ,"permission_level": }, ...] }
 * failure: { status: http_error_code, data: error_string }
+```    
+{
+    "permission_code": 1,
+    "permission_level": "User"
+},
+{
+    "permission_code": 5,
+    "permission_level": "Moderator"
+},
+{
+    "permission_code": 10,
+    "permission_level": "Admin"
+}
+```    
 
 # User Admin - [Top](#contents)
 ## /user_admin/create_user -> POST
