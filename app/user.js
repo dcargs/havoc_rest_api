@@ -29,6 +29,7 @@ router.post('/login', async function(req, res){
   if(check_var.check_var(username) && check_var.check_var(password)){
     try {
       var hashed_password = await user_query.get_user_password(username);
+      // console.log(hashed_password);
       if(hashed_password){
         bcrypt.compare(password, hashed_password, async function(err, flag) {
           if(err){

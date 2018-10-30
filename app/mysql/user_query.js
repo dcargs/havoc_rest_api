@@ -66,10 +66,14 @@ module.exports = {
       let params = [username];
 
       let response = await query.query(query_statement, params);
-      if(response[0].password){
-        resolve(response[0].password);
+      if(response.length > 0){
+        if(response[0].password){
+          resolve(response[0].password);
+        } else {
+          reject(response.message);
+        }
       } else {
-        reject(response.message);
+        reject();
       }
     });
   },
