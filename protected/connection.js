@@ -4,7 +4,7 @@ var mysql = require('mysql');
 //Create connection variable that will be used throughout the
 //api to talk to the database
 var connection = mysql.createConnection({
-  host: 'dev.baked.kitty', //127.0.0.1
+  host: '127.0.0.1', //dev.baked.kitty
   user: 'havoc_user',
   password: 'ASDFasdf!QAZ1qaz',
   database: 'havoc'
