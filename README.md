@@ -101,3 +101,47 @@ All routes that are created are put through testing using the [supertest](https:
  * Rapid development of API functionality
  * Quick tests to new code
  * Easy extra-ordinary input testing
+### Example test:
+The below test example will try to login as `test_user` and get all the users. This function requires Admin privileges so depending on the privilege level of `test_user` it will pass or fail.
+```    
+//==================== /user_admin/get_all_users API test ====================
+/**
+ * Testing user_admin/get_all_users for Executive Admins
+ */
+ describe('POST /user_admin/get_all_users', function () {
+   var session_token;
+   before(function(done) {
+     this.timeout(6000);
+     request(app)
+     .post('/user/login')
+     .send({
+       username: user,
+       password: pass
+     })
+     .end(function(err, res) {
+       if (err) throw err;
+       session_token = res.body.data.session_token;
+       done();
+     });
+   });
+
+   it('respond with 200 successful', function (done) {
+       request(app)
+           .post('/user_admin/get_all_users')
+           .send({
+             username: 'test_user',
+             session_token: session_token
+           })
+           .set('Accept', 'application/json')
+           .expect('Content-Type', /json/)
+           .end((err, res) => {
+               if (err || res.body.status != 200){
+                 throw new Error('Status Code: '+res.body.status)
+                 done();
+               } else {
+                 done();
+               }
+           });
+   });
+ });
+ ```    
