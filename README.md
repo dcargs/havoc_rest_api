@@ -51,8 +51,47 @@ Havoc Communications REST API / STUN Server
 * username -> string
 * session_token -> string
 #### Returns:
-* success: { status: 200, data: [{ "email": ,"username": ,"first_name": ,"last_name": ,"permission_code": , "permission_level": }, ...] }
+* success: { status: 200, data: JSON_data }
 * failure: { status: http_error_code, data: error_string }
+```    
+{
+    "status": 200,
+    "data": [
+        {
+            "email": "cargilldevin@gmail.com",
+            "username": "dcargill",
+            "first_name": "Devin",
+            "last_name": "Cargill",
+            "permission_code": 10,
+            "permission_level": "Admin"
+        },
+        {
+            "email": "david.erik.auger@gmail.com",
+            "username": "david",
+            "first_name": "David",
+            "last_name": "Auger",
+            "permission_code": 10,
+            "permission_level": "Admin"
+        },
+        {
+            "email": "dc23b@mail.missouri.edu",
+            "username": "dc23b",
+            "first_name": "Devin",
+            "last_name": "Cargill",
+            "permission_code": 1,
+            "permission_level": "User"
+        },
+        {
+            "email": "haydenhaddock1@gmail.com",
+            "username": "hayden",
+            "first_name": "Hayden",
+            "last_name": "Haddock",
+            "permission_code": 10,
+            "permission_level": "Admin"
+        }
+    ]
+}
+```    
 
 ## /user_admin/update_user -> POST -> ADMIN ONLY
 ### This function updates a given user for any of the following properties:
