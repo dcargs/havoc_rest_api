@@ -5,14 +5,26 @@ var os = require('os')
 //Create connection variable that will be used throughout the
 //api to talk to the database
 let hostname = os.hostname();
-console.log(hostname);
+let ec2_hostname = 'ip-172-31-28-100';
+let dev_hostname = 'bakedkitty';
 
-var connection = mysql.createConnection({
-  host: '127.0.0.1', //127.0.0.1dev.baked.kitty
-  user: 'havoc_user',
-  password: 'ASDFasdf!QAZ1qaz',
-  database: 'havoc'
-});
+if(hostname == ec2_hostname || hostname == dev_hostname){//prod
+  var connection = mysql.createConnection({
+    host: '127.0.0.1', //127.0.0.1dev.baked.kitty
+    user: 'havoc_user',
+    password: 'ASDFasdf!QAZ1qaz',
+    database: 'havoc'
+  });
+} else {//dev
+  var connection = mysql.createConnection({
+    host: 'dev.baked.kitty',
+    user: 'havoc_user',
+    password: 'ASDFasdf!QAZ1qaz',
+    database: 'havoc'
+  });
+}
+
+
 
 //try a connection to the MySQL server and throw an Error
 //if the connection fails
