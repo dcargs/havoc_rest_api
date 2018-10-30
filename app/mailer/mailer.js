@@ -1,5 +1,6 @@
 var nodemailer = require('nodemailer');
 var os = require('os');
+var mailerConfig = require('./mailer-config');
 
 let hostname = os.hostname();
 let ec2_hostname = 'ip-172-31-28-100';
@@ -8,8 +9,8 @@ let dev_hostname = 'bakedkitty';
 var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'havoc.communications@gmail.com',
-    pass: 'B84KQZZkw9P9'
+    user: mailerConfig.user,
+    pass: mailerConfig.pass
   }
 });
 

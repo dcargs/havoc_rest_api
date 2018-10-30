@@ -230,7 +230,7 @@ Havoc Communications REST API / STUN Server
 
 # Notification - [Top](#contents)
 ## /notification/get_notifications -> POST
-### This function returns all of a user's notifications in a JSON object that contains an overview section and the specific notification sections that are present for that user. See the sample response below for an example.
+### This function returns all of a user's notifications in a JSON object that contains an overview section and the specific notification sections that are present for that user. See the sample response below for an example. 
 #### Things to send:
 * username -> string
 * session_token -> string
