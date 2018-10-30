@@ -7,6 +7,7 @@ Havoc Communications REST API / STUN Server
 
 # API End-Points
 * [Permission Admin](#permission-admin---top)
+  * [Get Permissions](#permission_adminget_permissions---post)
 * [User Admin](#user-admin---top)
 * [User](#user---top)
 
