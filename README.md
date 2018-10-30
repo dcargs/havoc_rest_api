@@ -94,4 +94,10 @@ Havoc Communications REST API / STUN Server
 * failure: { status: http_error_code, data: error_string }
 
 # Unit Testing - [Top](#contents)
-All routes that are created are put through testing using the (supertest)[https://www.npmjs.com/package/supertest] module. This allows for rapid development of API functionality by quickly being able to test the newly created route. Supertest allows for easy extra-ordinary input testing due to being able to code requests into test files. All tests are within the test folder in the root of the project directory.
+All routes that are created are put through testing using the [supertest](https://www.npmjs.com/package/supertest) module. All tests are within the test folder in the root of the project directory.
+### How to run:
+ * In the root directory of this project run `npm test`
+### Benefits:
+ * Rapid development of API functionality
+ * Quick tests to new code
+ * Easy extra-ordinary input testing
