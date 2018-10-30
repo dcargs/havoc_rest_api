@@ -20,6 +20,8 @@ Havoc Communications REST API / STUN Server
   * [Check Status](#usercheck_status---post)
 * [Friend](#friend---top)
   * [Find Friends](#friendfind_friends---post)
+* [Notification](#notification---top)
+  * [Get Notifications](#notificationget_notifications---post)
 
 # Permission Admin - [Top](#contents)
 ## /permission_admin/get_permissions -> POST
@@ -223,6 +225,111 @@ Havoc Communications REST API / STUN Server
             "last_name": "Haddock"
         }
     ]
+}
+```    
+
+# Notification - [Top](#contents)
+## /notification/get_notifications -> POST
+### This function returns all of a user's notifications in a JSON object that contains an overview section and the specific notification sections that are present for that user. See the sample response below for an example.
+#### Things to send:
+* username -> string
+* session_token -> string
+#### Returns:
+* success: { status: 200, data: JSON_data }
+* failure: { status: http_error_code, data: error_string }
+```    
+{
+    "status": 200,
+    "data": {
+        "notifications": {
+            "overview": [
+                {
+                    "id": 1,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "dc23b",
+                    "fk_notification_type_id": 1,
+                    "description": "Friend Request",
+                    "table_location": "friend_notification"
+                },
+                {
+                    "id": 2,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "david",
+                    "fk_notification_type_id": 2,
+                    "description": "New Message",
+                    "table_location": "message_notification"
+                },
+                {
+                    "id": 3,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "hayden",
+                    "fk_notification_type_id": 2,
+                    "description": "New Message",
+                    "table_location": "message_notification"
+                },
+                {
+                    "id": 4,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "test_user",
+                    "fk_notification_type_id": 1,
+                    "description": "Friend Request",
+                    "table_location": "friend_notification"
+                },
+                {
+                    "id": 5,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "test_user",
+                    "fk_notification_type_id": 2,
+                    "description": "New Message",
+                    "table_location": "message_notification"
+                }
+            ],
+            "friend_notification": [
+                {
+                    "fk_notification_id": 1,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "dc23b",
+                    "sent_date": "2018-10-31T01:04:59.000Z",
+                    "message": "Hey Devin,\n\nI saw you were on here. Just thought we should be friends.\n\n-D giggity",
+                    "accepted": 0
+                },
+                {
+                    "fk_notification_id": 4,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "test_user",
+                    "sent_date": "2018-10-31T01:44:22.000Z",
+                    "message": "Hey lets be friends",
+                    "accepted": 0
+                }
+            ],
+            "message_notification": [
+                {
+                    "fk_notification_id": 2,
+                    "fk_message_id": 1,
+                    "id": 1,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "david",
+                    "content": "Hey dev, whats up?"
+                },
+                {
+                    "fk_notification_id": 3,
+                    "fk_message_id": 2,
+                    "id": 2,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "hayden",
+                    "content": "Hey devin, it's hayden. What's up?"
+                },
+                {
+                    "fk_notification_id": 5,
+                    "fk_message_id": 3,
+                    "id": 3,
+                    "fk_receiver_username": "dcargill",
+                    "fk_sender_username": "test_user",
+                    "content": "Hey why didn't you accept my friend request"
+                }
+            ]
+        }
+    }
 }
 ```    
 

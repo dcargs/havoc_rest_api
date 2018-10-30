@@ -2,8 +2,8 @@ const request = require('supertest');
 const app = require('../server.js');//reference to entire api application
 
 // Used throughout page for testing
-const user = 'test_user';
-const pass = 'test_password';
+const user = 'dcargill';
+const pass = '1234';
 
  //==================== /user/logout API test ====================
  /**
@@ -210,7 +210,7 @@ const pass = 'test_password';
            request(app)
                .post('/user_admin/get_all_users')
                .send({
-                 username: 'test_user',
+                 username: user,
                  session_token: session_token
                })
                .set('Accept', 'application/json')
@@ -251,7 +251,7 @@ const pass = 'test_password';
             request(app)
                 .post('/user_admin/delete_user')
                 .send({
-                  username: 'test_user',
+                  username: user,
                   session_token: session_token,
                   delete_user: 'new_user'
                 })
@@ -293,7 +293,7 @@ const pass = 'test_password';
              request(app)
                  .post('/user_admin/get_request_logs')
                  .send({
-                   username: 'test_user',
+                   username: user,
                    session_token: session_token
                  })
                  .set('Accept', 'application/json')
@@ -334,7 +334,7 @@ const pass = 'test_password';
             request(app)
                 .post('/permission_admin/get_permissions')
                 .send({
-                  username: 'test_user',
+                  username: user,
                   session_token: session_token
                 })
                 .set('Accept', 'application/json')
@@ -375,7 +375,7 @@ const pass = 'test_password';
              request(app)
                  .post('/friend/find_friends')
                  .send({
-                   username: 'test_user',
+                   username: user,
                    session_token: session_token
                  })
                  .set('Accept', 'application/json')
@@ -390,3 +390,44 @@ const pass = 'test_password';
                  });
          });
        });
+
+       //==================== /notification/get_notifications API test ====================
+       /**
+        * Testing notification/get_notifications
+        */
+        describe('POST /notification/get_notifications', function () {
+          var session_token;
+          before(function(done) {
+            this.timeout(6000);
+            request(app)
+            .post('/user/login')
+            .send({
+              username: user,
+              password: pass
+            })
+            .end(function(err, res) {
+              if (err) throw err;
+              session_token = res.body.data.session_token;
+              done();
+            });
+          });
+
+          it('respond with 200 successful', function (done) {
+              request(app)
+                  .post('/notification/get_notifications')
+                  .send({
+                    username: user,
+                    session_token: session_token
+                  })
+                  .set('Accept', 'application/json')
+                  .expect('Content-Type', /json/)
+                  .end((err, res) => {
+                      if (err || res.body.status != 200){
+                        throw new Error('Status Code: '+res.body.status)
+                        done();
+                      } else {
+                        done();
+                      }
+                  });
+          });
+        });
