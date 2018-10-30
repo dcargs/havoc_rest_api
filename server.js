@@ -38,7 +38,7 @@ app.use(async function(req, res, next) {
     // console.log(Object.keys(req));
     let data = {
       route_called: req.path,
-      ip_address: req.connection.remoteAddress,
+      ip_address: req.headers['x-real-ip'];,
       fk_username: req.body.username,
       headers: req.headers,
       body: req.body
