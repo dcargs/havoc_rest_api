@@ -70,3 +70,7 @@ app.get('/', function (req, res) {
 http.createServer(app).listen(port);
 
 console.log("express server running on http://localhost:"+port);
+
+
+//*********************** TESTING ******************************//
+module.exports = app;//USED FOR TESTING

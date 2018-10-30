@@ -4,7 +4,7 @@
   "description": "Havoc Communications REST API / STUN Server",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha 'test/apiTest.js'",
     "start": "node server.js"
   },
   "repository": {
@@ -20,7 +20,11 @@
   "dependencies": {
     "bcrypt": "^3.0.2",
     "express": "^4.16.4",
+    "mocha": "^5.2.0",
     "mysql": "^2.16.0",
     "node-gyp": "^3.8.0"
+  },
+  "devDependencies": {
+    "supertest": "^3.3.0"
   }
 }
