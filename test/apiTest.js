@@ -2,8 +2,8 @@ const request = require('supertest');
 const app = require('../server.js');//reference to entire api application
 
 // Used throughout page for testing
-const user = 'dcargill';
-const pass = '1234';
+const user = 'test_user';
+const pass = 'test_password';
 
  //==================== /user/logout API test ====================
  /**
@@ -21,7 +21,7 @@ const pass = '1234';
       })
       .end(function(err, res) {
         if (err) throw err;
-        session_token = res.body.data.session_token;
+        session_token = res.body.data.user_details.session_token;
         done();
       });
     });
@@ -62,7 +62,7 @@ const pass = '1234';
        })
        .end(function(err, res) {
          if (err) throw err;
-         session_token = res.body.data.session_token;
+         session_token = res.body.data.user_details.session_token;
          done();
        });
      });
@@ -103,7 +103,7 @@ const pass = '1234';
         })
         .end(function(err, res) {
           if (err) throw err;
-          session_token = res.body.data.session_token;
+          session_token = res.body.data.user_details.session_token;
           done();
         });
       });
@@ -153,7 +153,7 @@ const pass = '1234';
         })
         .end(function(err, res) {
           if (err) throw err;
-          session_token = res.body.data.session_token;
+          session_token = res.body.data.user_details.session_token;
           done();
         });
       });
@@ -201,7 +201,7 @@ const pass = '1234';
          })
          .end(function(err, res) {
            if (err) throw err;
-           session_token = res.body.data.session_token;
+           session_token = res.body.data.user_details.session_token;
            done();
          });
        });
@@ -242,7 +242,7 @@ const pass = '1234';
           })
           .end(function(err, res) {
             if (err) throw err;
-            session_token = res.body.data.session_token;
+            session_token = res.body.data.user_details.session_token;
             done();
           });
         });
@@ -284,7 +284,7 @@ const pass = '1234';
            })
            .end(function(err, res) {
              if (err) throw err;
-             session_token = res.body.data.session_token;
+             session_token = res.body.data.user_details.session_token;
              done();
            });
          });
@@ -325,7 +325,7 @@ const pass = '1234';
           })
           .end(function(err, res) {
             if (err) throw err;
-            session_token = res.body.data.session_token;
+            session_token = res.body.data.user_details.session_token;
             done();
           });
         });
@@ -366,7 +366,7 @@ const pass = '1234';
            })
            .end(function(err, res) {
              if (err) throw err;
-             session_token = res.body.data.session_token;
+             session_token = res.body.data.user_details.session_token;
              done();
            });
          });
@@ -407,7 +407,7 @@ const pass = '1234';
             })
             .end(function(err, res) {
               if (err) throw err;
-              session_token = res.body.data.session_token;
+              session_token = res.body.data.user_details.session_token;
               done();
             });
           });

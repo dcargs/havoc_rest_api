@@ -6,6 +6,7 @@ var returnOBJ = require('./globals/global_return');
 var http_codes = require('./globals/http_codes');
 var input_standard = require('./globals/input_standardization');
 var user_query = require('./mysql/user_query');
+var notification_query = require('./mysql/notification_query');
 var hash_functions = require('./globals/hash_functions');
 
 // ********* DANGEROUS, DO NOT LEAVE IN FOR PROD ***********************
@@ -40,9 +41,11 @@ router.post('/login', async function(req, res){
           } else {
             if(flag){
               let session_token = hash_functions.genRandomString(254);
-              let user_status = await user_query.store_user_session_token(username, session_token);
+              let user_details = await user_query.store_user_session_token(username, session_token);
+              let notifications = await notification_query.get_user_notifications(username);
               returnOBJ.status = 200;
-              returnOBJ.data = user_status;
+              returnOBJ.data = { user_details, notifications };
+              // returnOBJ.data.push();
               res.send(returnOBJ);
             } else {
               console.log("password did not match for username: "+username);

@@ -12,8 +12,11 @@ module.exports = {
 
       try {
         var general_result = await query.query(query_statement, params);
+        var meta = await module.exports.build_notification_meta(general_result);
+
         var notification_data = {
           notifications: {
+            meta: meta,
             overview: general_result
           }
         }
@@ -52,5 +55,44 @@ module.exports = {
         reject(e);
       }
     });
+  },
+  get_notification_types: async function(){
+    return new Promise(async function(resolve, reject) {
+      let query_statement = 'SELECT * FROM notification_type';
+      let params = [];
+      try {
+        let result = await query.query(query_statement, params);
+        resolve(result);
+      } catch (e) {
+        reject(result);
+      }
+    });
+  },
+
+  build_notification_meta: async function(general_result){
+    return new Promise(async function(resolve, reject) {
+      var notification_types = await module.exports.get_notification_types();
+      var table_locations = {};
+
+      for (var i = 0; i < notification_types.length; i++) {
+        table_locations[notification_types[i].table_location+"_count"] = 0;
+      }
+
+      var table_locations_keys = Object.keys(table_locations);
+
+      for (var i = 0; i < general_result.length; i++) {
+        var notification_type = general_result[i].table_location;
+        for (var j = 0; j < table_locations_keys.length; j++) {
+          var comparison = notification_type + "_count";
+          if(table_locations_keys[j] == comparison){
+            table_locations[table_locations_keys[j]]++;
+          }
+        }
+      }
+      table_locations["overview_count"] = general_result.length;
+
+      resolve(table_locations);
+    });
   }
+
 }

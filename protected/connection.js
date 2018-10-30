@@ -15,9 +15,9 @@ if(hostname == ec2_hostname || hostname == dev_hostname){//prod
     password: 'ASDFasdf!QAZ1qaz',
     database: 'havoc'
   });
-} else {//dev
+} else {//local dev
   var connection = mysql.createConnection({
-    host: 'dev.baked.kitty',
+    host: '10.0.0.9',
     user: 'havoc_user',
     password: 'ASDFasdf!QAZ1qaz',
     database: 'havoc'

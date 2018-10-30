@@ -8,10 +8,6 @@ var fs = require('fs'),
   port = 12345,
   app = express();
 
-//const privateKey = fs.readFileSync('/etc/letsencrypt/live/havoc-communications.com/privkey.pem', 'utf8');
-//const certificate = fs.readFileSync('/etc/letsencrypt/live/havoc-communications.com/cert.pem', 'utf8');
-//const ca = fs.readFileSync('/etc/letsencrypt/live/havoc-communications.com/chain.pem', 'utf8');
-
 // this allows cross origin access (you need this for mobile apps)
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -35,7 +31,6 @@ app.use(bodyParser.json({limit: '500mb'}));
 // logs every request
 app.use(async function(req, res, next) {
   if(req.body.username){
-    // console.log(Object.keys(req));
     let data = {
       route_called: req.path,
       ip_address: req.headers['x-real-ip'] ? req.headers['x-real-ip'] : req.ip,
@@ -43,7 +38,6 @@ app.use(async function(req, res, next) {
       headers: req.headers.connection,
       body: req.body
     };
-    // console.log(req.ip);
     await adminQuery.log_request(data);
 
     next();
@@ -64,16 +58,10 @@ app.get('/', function (req, res) {
   res.send('hello world')
 });
 
-/*const credentials = {
-  key: privateKey,
-  cert: certificate,
-  ca: ca
-};*/
-
 http.createServer(app).listen(port);
 
 console.log("express server running on http://localhost:"+port);
 
 
-//*********************** TESTING ******************************//
-module.exports = app;//USED FOR TESTING
+//*********************** SuperTest TESTING in ./test/apiTest.js ******************************//
+module.exports = app;//USED FOR SuperTest TESTING
