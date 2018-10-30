@@ -1,12 +1,16 @@
 # havoc_rest_api
 Havoc Communications REST API / STUN Server
 
+# Contents
+* [API End-Points](#api-end-points)
+* [Unit Testing](#unit-testing---top)
+
 # API End-Points
 * [Permission Admin](#permission-admin---top)
 * [User Admin](#user-admin---top)
 * [User](#user---top)
 
-# Permission Admin - [Top](#api-end-points)
+# Permission Admin - [Top](#contents)
 ## /permission_admin/get_permissions -> POST
 ### This function returns all permissions -> ADMIN ONLY
 #### Things to send:
@@ -16,7 +20,7 @@ Havoc Communications REST API / STUN Server
 * success: { status: 200, data: [{ "permission_code": ,"permission_level": }, ...] }
 * failure: { status: http_error_code, data: error_string }
 
-# User Admin - [Top](#api-end-points)
+# User Admin - [Top](#contents)
 ## /user_admin/create_user -> POST
 ### This function creates a user -> ADMIN ONLY
 #### Things to send:
@@ -61,7 +65,7 @@ Havoc Communications REST API / STUN Server
 * success: { status: 200, data: { "OK" } }
 * failure: { status: http_error_code, data: error_string }
 
-# User - [Top](#api-end-points)
+# User - [Top](#contents)
 ## /user/login -> POST
 ### This function logs a user in and inserts their session_token into user_session
 #### Things to send:
@@ -88,3 +92,6 @@ Havoc Communications REST API / STUN Server
 #### Returns:
 * success: { status: 200, data: OK}
 * failure: { status: http_error_code, data: error_string }
+
+# Unit Testing - [Top](#contents)
+All routes that are created are put through testing using the supertest module. This allows for rapid development of API functionality by quickly being able to test the newly created route. Supertest allows for easy extra-ordinary input testing due to being able to code requests into test files. All tests are within the test folder in the root of the project directory.
