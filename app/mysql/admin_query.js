@@ -1,4 +1,5 @@
 var query = require('./query');
+var mailer = require('../mailer/mailer');
 var bcrypt = require('bcrypt');
 
 
@@ -11,6 +12,7 @@ module.exports = {
 
       let response = await query.query(query_statement, params);
       if(response.affectedRows == 1){
+        var result = await mailer.send_welcome_email(user);
         resolve(response);
       } else {
         reject(response.message);

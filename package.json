@@ -22,7 +22,8 @@
     "express": "^4.16.4",
     "mocha": "^5.2.0",
     "mysql": "^2.16.0",
-    "node-gyp": "^3.8.0"
+    "node-gyp": "^3.8.0",
+    "nodemailer": "^4.6.8"
   },
   "devDependencies": {
     "supertest": "^3.3.0"
