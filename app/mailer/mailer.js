@@ -24,7 +24,7 @@ var mailOptions = {
 module.exports = {
   send_welcome_email: async function(user){
     return new Promise(async function(resolve, reject) {
-      if(hostname == ec2_hostname){
+      if(hostname == ec2_hostname || hostname == dev_hostname){
         let subject = "Welcome to Havoc Communications!";
         let text = "Welcome to Havoc Communications, "+user.first_name+". We're happy to have you!";
         let to = user.email;
