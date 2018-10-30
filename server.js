@@ -1,5 +1,5 @@
 var fs = require('fs'),
-  https = require('https'),
+  http = require('http'),
   express = require('express'),
   // cookieParser = require('cookie-parser'),
   // session = require('express-session'),
@@ -7,6 +7,10 @@ var fs = require('fs'),
   bodyParser = require('body-parser'),
   port = 12345,
   app = express();
+
+//const privateKey = fs.readFileSync('/etc/letsencrypt/live/havoc-communications.com/privkey.pem', 'utf8');
+//const certificate = fs.readFileSync('/etc/letsencrypt/live/havoc-communications.com/cert.pem', 'utf8');
+//const ca = fs.readFileSync('/etc/letsencrypt/live/havoc-communications.com/chain.pem', 'utf8');
 
 // this allows cross origin access (you need this for mobile apps)
 var allowCrossDomain = function(req, res, next) {
@@ -57,10 +61,12 @@ app.get('/', function (req, res) {
   res.send('hello world')
 });
 
+/*const credentials = {
+  key: privateKey,
+  cert: certificate,
+  ca: ca
+};*/
 
-https.createServer({
-  key: fs.readFileSync('protected/server.key'),
-  cert: fs.readFileSync('protected/server.cert'),
-}, app).listen(port);
+http.createServer(app).listen(port);
 
-console.log("express server running on https://localhost:"+port);
+console.log("express server running on http://localhost:"+port);
