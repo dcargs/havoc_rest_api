@@ -27,7 +27,7 @@ router.post('/create_user', async function(req, res){
           let request_user_details = await user_query.get_user_details(username);
           if(request_user_details.permission_level == 'Admin'){
             let result = await admin_query.create_user(new_user);
-            if(result){
+            if(result && result.affectedRows == 1){
               returnOBJ.status = 200;
               returnOBJ.data = http_codes["200"];
               res.send(returnOBJ);

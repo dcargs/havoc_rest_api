@@ -268,6 +268,47 @@ const pass = 'test_password';
         });
       });
 
+      //==================== /user_admin/get_request_logs API test ====================
+      /**
+       * Testing user_admin/get_request_logs for Executive Admins
+       */
+       describe('POST /user_admin/get_request_logs', function () {
+         var session_token;
+         before(function(done) {
+           this.timeout(6000);
+           request(app)
+           .post('/user/login')
+           .send({
+             username: user,
+             password: pass
+           })
+           .end(function(err, res) {
+             if (err) throw err;
+             session_token = res.body.data.session_token;
+             done();
+           });
+         });
+
+         it('respond with 200 successful', function (done) {
+             request(app)
+                 .post('/user_admin/get_request_logs')
+                 .send({
+                   username: 'test_user',
+                   session_token: session_token
+                 })
+                 .set('Accept', 'application/json')
+                 .expect('Content-Type', /json/)
+                 .end((err, res) => {
+                     if (err || res.body.status != 200){
+                       throw new Error('Status Code: '+res.body.status)
+                       done();
+                     } else {
+                       done();
+                     }
+                 });
+         });
+       });
+
      //==================== /permission_admin/get_permissions API test ====================
      /**
       * Testing permission_admin/get_permissions for Executive Admins

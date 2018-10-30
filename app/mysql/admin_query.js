@@ -10,12 +10,16 @@ module.exports = {
       let query_statement = 'INSERT INTO user (email, username, first_name, last_name, password, fk_permission_code) VALUES (?,?,?,?,?,?)';
       let params = [user.email, user.username, user.first_name, user.last_name, hashed_password, user.fk_permission_code];
 
-      let response = await query.query(query_statement, params);
-      if(response.affectedRows == 1){
-        var result = await mailer.send_welcome_email(user);
-        resolve(response);
-      } else {
-        reject(response.message);
+      try {
+        let response = await query.query(query_statement, params);
+        if(response.affectedRows == 1){
+          var result = await mailer.send_welcome_email(user);
+          resolve(response);
+        } else {
+          reject(response.message);
+        }
+      } catch (e) {
+        reject(e);
       }
     });
   },
