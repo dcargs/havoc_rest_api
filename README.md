@@ -51,6 +51,16 @@ Havoc Communications REST API / STUN Server
 * success: { status: 200, data: { "OK" } }
 * failure: { status: http_error_code, data: error_string }
 
+## /user_admin/delete_user -> POST -> ADMIN ONLY
+### This function deletes a user
+#### Things to send:
+* username -> string
+* session_token -> string
+* delete_user -> string
+#### Returns:
+* success: { status: 200, data: { "OK" } }
+* failure: { status: http_error_code, data: error_string }
+
 # User - [Top](#api-end-points)
 ## /user/login -> POST
 ### This function logs a user in and inserts their session_token into user_session

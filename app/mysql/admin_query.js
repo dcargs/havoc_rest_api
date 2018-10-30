@@ -84,6 +84,20 @@ module.exports = {
     });
   },
 
+  delete_user: async function(username){
+    return new Promise(async function(resolve, reject) {
+      let query_statement = 'DELETE FROM user WHERE username = ?';
+      let params = username;
+
+      let result = await query.query(query_statement, params);
+      if(result && result.affectedRows == 1){
+        resolve(result);
+      } else {
+        reject(result.message);
+      }
+    });
+  },
+
   read_permissions: async function(){
     return new Promise(async function(resolve, reject) {
       let query_statement = 'SELECT * FROM permission';
