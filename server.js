@@ -100,13 +100,13 @@ io.sockets.on('connection', function(socket) {
       socket.join(room);
       log('Client ID ' + socket.id + ' created room ' + room);
       socket.emit('created', room, socket.id);
+
     } else if (numClients === 1) {
       log('Client ID ' + socket.id + ' joined room ' + room);
-      // io.sockets.in(room).emit('join', room);
+      io.sockets.in(room).emit('join', room);
       socket.join(room);
       socket.emit('joined', room, socket.id);
-      io.sockets.in(room).emit('ready', room);
-      socket.broadcast.emit('ready', room);
+      io.sockets.in(room).emit('ready');
     } else { // max two clients
       socket.emit('full', room);
     }
@@ -123,12 +123,8 @@ io.sockets.on('connection', function(socket) {
     }
   });
 
-  socket.on('disconnect', function(reason) {
-    console.log(`Peer or server disconnected. Reason: ${reason}.`);
-    socket.broadcast.emit('bye');
+  socket.on('bye', function(){
+    console.log('received bye');
   });
 
-  socket.on('bye', function(room) {
-    console.log(`Peer said bye on room ${room}.`);
-  });
 });
