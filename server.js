@@ -5,7 +5,9 @@ var fs = require('fs'),
   // session = require('express-session'),
   adminQuery = require('./app/mysql/admin_query.js'),
   bodyParser = require('body-parser'),
-  port = 12345,
+  socketIO = require('socket.io'),
+  os = require('os'),
+  express_port = 12345,
   app = express();
 
 // this allows cross origin access (you need this for mobile apps)
@@ -53,15 +55,78 @@ app.use('/permission_admin', require('./app/permission_admin.js'));
 app.use('/friend', require('./app/friend.js'));
 app.use('/notification', require('./app/notification.js'));
 app.use('/message', require('./app/message.js'));
+// app.use('/signal', require('./app/signal.js'));
 
 app.get('/', function (req, res) {
   res.send('hello world')
 });
 
-http.createServer(app).listen(port);
 
-console.log("express server running on http://localhost:"+port);
-
+http.createServer(app).listen(express_port);
+console.log("express server running on http://localhost:"+express_port);
 
 //*********************** SuperTest TESTING in ./test/apiTest.js ******************************//
 module.exports = app;//USED FOR SuperTest TESTING
+
+//*********************** web socket stuff ***********************
+var socket_port = 12346;
+var socketApp = http.createServer().listen(socket_port);
+var io = socketIO.listen(socketApp);
+io.sockets.on('connection', function(socket) {
+
+  // convenience function to log server messages on the client
+  function log() {
+    var array = ['Message from server:'];
+    array.push.apply(array, arguments);
+    socket.emit('log', array);
+  }
+
+  socket.on('message', function(message) {
+    log('Client said: ', message);
+    // for a real app, would be room-only (not broadcast)
+    socket.broadcast.emit('message', message);
+  });
+
+  socket.on('create or join', function(room) {
+    log('Received request to create or join room ' + room);
+
+    var clientsInRoom = io.sockets.adapter.rooms[room];
+    var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0;
+    log('Room ' + room + ' now has ' + numClients + ' client(s)');
+
+    if (numClients === 0) {
+      socket.join(room);
+      log('Client ID ' + socket.id + ' created room ' + room);
+      socket.emit('created', room, socket.id);
+    } else if (numClients === 1) {
+      log('Client ID ' + socket.id + ' joined room ' + room);
+      // io.sockets.in(room).emit('join', room);
+      socket.join(room);
+      socket.emit('joined', room, socket.id);
+      io.sockets.in(room).emit('ready', room);
+      socket.broadcast.emit('ready', room);
+    } else { // max two clients
+      socket.emit('full', room);
+    }
+  });
+
+  socket.on('ipaddr', function() {
+    var ifaces = os.networkInterfaces();
+    for (var dev in ifaces) {
+      ifaces[dev].forEach(function(details) {
+        if (details.family === 'IPv4' && details.address !== '127.0.0.1') {
+          socket.emit('ipaddr', details.address);
+        }
+      });
+    }
+  });
+
+  socket.on('disconnect', function(reason) {
+    console.log(`Peer or server disconnected. Reason: ${reason}.`);
+    socket.broadcast.emit('bye');
+  });
+
+  socket.on('bye', function(room) {
+    console.log(`Peer said bye on room ${room}.`);
+  });
+});
