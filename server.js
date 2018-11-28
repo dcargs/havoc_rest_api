@@ -76,7 +76,7 @@ console.log("socket.io signaling server running on http://localhost:"+socket_por
 
 io.sockets.on('connection', function(socket) {
   console.log(socket);
-  
+
   // convenience function to log server messages on the client
   function log() {
     var array = ['Message from server:'];
@@ -94,7 +94,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('create or join', function(room) {
     log('Received request to create or join room ' + room);
 
-    var clientsInRoom = io.sockets.adapter.rooms[room];
+    var clientsInRoom = socketIO.adapter.rooms[room];
     var numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0;
     log('Room ' + room + ' now has ' + numClients + ' client(s)');
 
