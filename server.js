@@ -75,7 +75,7 @@ var io = socketIO.listen(socketApp);
 console.log("socket.io signaling server running on http://localhost:"+socket_port);
 
 io.sockets.on('connection', function(socket) {
-
+  console.log(socket);
   // convenience function to log server messages on the client
   function log() {
     var array = ['Message from server:'];
