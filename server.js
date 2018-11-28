@@ -76,7 +76,7 @@ console.log("socket.io signaling server running on http://localhost:"+socket_por
 
 io.sockets.on('connection', function(socket) {
   console.log(socket);
-  var clientsInRoom = io.sockets.adapter.rooms[room];
+  
   // convenience function to log server messages on the client
   function log() {
     var array = ['Message from server:'];
