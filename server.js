@@ -72,7 +72,7 @@ module.exports = app;//USED FOR SuperTest TESTING
 // socketIO = require('socket.io'),
 var socket_port = 12346;
 var socketApp = http.createServer().listen(socket_port);
-var io = socketIO.listen(socketApp);
+var io = socketIO.listen(socketApp, { transports: ['websocket', 'xhr-polling']});
 io.origins('havoc-communications.com www.havoc-communications.com havoc-communications.com:* www.havoc-communications.com:*');
 console.log("socket.io signaling server running on http://localhost:"+socket_port);
 
