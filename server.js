@@ -73,7 +73,7 @@ module.exports = app;//USED FOR SuperTest TESTING
 var socket_port = 12346;
 var socketApp = http.createServer().listen(socket_port);
 var io = socketIO.listen(socketApp);
-io.origins('havoc-communications.com');
+io.origins('havoc-communications.com www.havoc-communications.com havoc-communications.com:* www.havoc-communications.com:*');
 console.log("socket.io signaling server running on http://localhost:"+socket_port);
 
 io.sockets.on('connection', function(socket) {
