@@ -77,7 +77,7 @@ io.origins('havoc-communications.com www.havoc-communications.com havoc-communic
 console.log("socket.io signaling server running on http://localhost:"+socket_port);
 
 io.sockets.on('connection', function(socket) {
-  // console.log(socket);
+  console.log(socket);
 
   // convenience function to log server messages on the client
   function log() {
